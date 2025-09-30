@@ -485,13 +485,13 @@ button:active {
     }
     
     .theme-toggle {
-        top: 15px;
-        right: 15px;
+        top: 25px;
+        right: 255px;
     }
     
     .settings-toggle {
-        bottom: 15px;
-        left: 15px;
+        bottom: 25px;
+        left: 25px;
     }
     
     .color-option {
