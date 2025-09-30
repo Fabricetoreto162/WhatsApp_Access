@@ -1,13 +1,13 @@
 const CACHE_NAME = "accesswa-cache-v1";
 const urlsToCache = [
   
-  "/index.html",
-  "/manifest.json",
-  "/style2.css",
-  "/script2.js",
-  "/countries.js",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  "./index.html",
+  "./manifest.json",
+  "./style2.css",
+  "./script2.js",
+  "./countries.js",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 // Installation du service worker
