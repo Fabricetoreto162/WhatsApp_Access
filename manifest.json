@@ -2,7 +2,7 @@
     "name": "Access WhatsApp",
     "short_name": "WA Access",
     "description": "Une application PWA simple pour ouvrir directement WhatsApp avec le numéro choisi.",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#25D366",

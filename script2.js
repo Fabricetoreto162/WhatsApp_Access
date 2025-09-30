@@ -1,15 +1,13 @@
-// Service Worker
+// Enregistrer le service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('Service Worker enregistré avec succès 👍', registration);
-      })
-      .catch(error => {
-        console.log('Échec de l\'enregistrement du Service Worker ❌', error);
-      });
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('Service Worker enregistré ✅', reg))
+      .catch(err => console.log('Erreur Service Worker ❌', err));
   });
 }
+
+
 
 // Gérer le bouton d'installation
 let deferredPrompt;
