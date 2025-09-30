@@ -40,20 +40,14 @@
             
             <label for="numero">Numéro de téléphone :</label>
             <input type="text" id="numero" placeholder="Numéro sans indicatif">
-            <div class="msg row d-flex align-items-center">
-                <div class="input-msg">
-                    <label for="message">Votre message :</label>
-                   <input type="text" id="message" placeholder="Écrivez votre message">
-                </div>
-                <div class="traduction">
-                    <button id="translateBtn" data-bs-toggle="modal" data-bs-target="#translateModal">
-                        <i class="fa-solid fa-language"></i>
-                        Traduire
-                    </button>
-                  
-                </div>
-            </div>
             
+            <label for="textInput">Votre message :</label>
+            <textarea id="textInput" class="form-control mb-3" rows="4" placeholder="Écrivez votre texte ici..."></textarea>
+
+            <button class="btn-translate" data-bs-toggle="modal" data-bs-target="#translateModal">
+                <i class="fas fa-language"></i>
+                Traduire le message
+            </button>
             
             <button onclick="ouvrirWhatsApp()">
                 <i class="fa-solid fa-arrow-right"></i>
@@ -103,39 +97,73 @@
         </div>
     </div>
 
-
-     <!-- Modal traduction -->
-    <div class="modal fade" id="translateModal" tabindex="-1" aria-labelledby="translateModalLabel" aria-hidden="true">
+    <!-- Modal Traduction -->
+    <div class="modal fade" id="translateModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content translate-modal">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="translateModalLabel">
-                         <i class="fa-solid fa-language"></i>Traduction
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title"><i class="fas fa-language me-2"></i>Traduction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-4">
-                        
-                        <div class="color-row">
-                           
+                    <!-- Texte initial (non traduit) -->
+                    <textarea id="modalText" class="form-control mb-3" rows="4" readonly></textarea>
+
+                    <!-- Bloc langues alignées horizontalement -->
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- Langue de départ -->
+                        <div class="flex-fill me-2">
+                            <label class="form-label">Langue de départ :</label>
+                            <select id="sourceLang" class="form-select">
+                                <option value="">-- Sélectionner --</option>
+                                <option value="fr">Français</option>
+                                <option value="en">Anglais</option>
+                                <option value="es">Espagnol</option>
+                                <option value="de">Allemand</option>
+                                <option value="it">Italien</option>
+                                <option value="pt">Portugais</option>
+                                <option value="ar">Arabe</option>
+                            </select>
+                        </div>
+
+                        <!-- Icône flèche -->
+                        <div class="d-flex align-items-center justify-content-center" style="width: 15px;margin-top: 30px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.146 12.354a.5.5 0 0 1 0-.708L12.793 9H1.5a.5.5 0 0 1 0-1h11.293l-2.647-2.646a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708 0z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Langue cible -->
+                        <div class="flex-fill ms-2">
+                            <label class="form-label">Langue cible :</label>
+                            <select id="targetLang" class="form-select">
+                                <option value="">-- Sélectionner --</option>
+                                <option value="fr">Français</option>
+                                <option value="en">Anglais</option>
+                                <option value="es">Espagnol</option>
+                                <option value="de">Allemand</option>
+                                <option value="it">Italien</option>
+                                <option value="pt">Portugais</option>
+                                <option value="ar">Arabe</option>
+                            </select>
                         </div>
                     </div>
-                   
+
+                    <!-- Résultat traduit -->
+                    <div id="translatedResult" class="mt-3 p-2 border rounded bg-light" style="min-height:60px;"></div>
                 </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                   
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="btnTranslate">
+                        <i class="fas fa-sync-alt me-2"></i>Traduire
+                    </button>
+                    <button class="btn btn-success" id="btnOk">
+                        <i class="fas fa-check me-2"></i>OK
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     
-
-
-
-
-
     <div class="notification" id="notification">
         <i class="fab fa-whatsapp whatsapp-icon"></i>
         <span id="notificationText"></span>

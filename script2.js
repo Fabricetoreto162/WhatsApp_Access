@@ -121,6 +121,11 @@ function changeColor(color, type) {
     
     updateParticles();
     updateActiveColorButtons();
+    
+    // Forcer le recalcul des styles pour s'assurer que les changements s'appliquent
+    document.body.style.animation = 'none';
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.animation = null;
 }
 
 function resetColors() {
@@ -131,6 +136,11 @@ function resetColors() {
     updateActiveColorButtons();
     updateParticles();
     showNotification("Couleurs réinitialisées");
+    
+    // Forcer le recalcul des styles
+    document.body.style.animation = 'none';
+    document.body.offsetHeight;
+    document.body.style.animation = null;
 }
 
 // Événements pour les options de couleur
@@ -214,7 +224,7 @@ fetch('countries.json')
 function ouvrirWhatsApp() {
   const indicatif = document.getElementById("indicatif").value;
   const numero = document.getElementById("numero").value.trim();
-  const message = document.getElementById("message").value;
+  const message = document.getElementById("textInput").value;
   
   if (numero) {
     const fullNumber = indicatif + numero;
@@ -226,6 +236,65 @@ function ouvrirWhatsApp() {
   }
 }
 
+// ==================== FONCTIONNALITÉ DE TRADUCTION ====================
+
+const textInput = document.getElementById("textInput");
+const modalText = document.getElementById("modalText");
+const sourceLang = document.getElementById("sourceLang");
+const targetLang = document.getElementById("targetLang");
+const translatedResult = document.getElementById("translatedResult");
+
+let storedText = "";
+
+// Pré-remplir la modal avec le texte initial
+document.getElementById("translateModal").addEventListener("show.bs.modal", () => {
+  storedText = textInput.value.trim();
+  modalText.value = storedText; // texte initial, non traduit
+  translatedResult.textContent = "";
+  sourceLang.value = "";
+  targetLang.value = "";
+});
+
+// Traduction via Google Translate non officiel
+async function googleTranslate(text, from, to) {
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data[0].map(item => item[0]).join("");
+  } catch (err) {
+    console.error("Erreur Google Translate:", err);
+    return "Erreur de traduction ❌";
+  }
+}
+
+// Bouton Traduire → uniquement traduit et affiche dans translatedResult
+document.getElementById("btnTranslate").addEventListener("click", async () => {
+  const from = sourceLang.value;
+  const to = targetLang.value;
+
+  if (!storedText) return showNotification("Le texte est vide !");
+  if (!from) return showNotification("Veuillez choisir la langue de départ !");
+  if (!to) return showNotification("Veuillez choisir la langue cible !");
+  if (from === to) return showNotification("Langue source et cible identiques !");
+
+  translatedResult.textContent = "Traduction en cours...";
+  const result = await googleTranslate(storedText, from, to);
+  translatedResult.textContent = result; // seulement ici
+});
+
+// Bouton OK → mettre à jour textarea principal
+document.getElementById("btnOk").addEventListener("click", () => {
+  if (translatedResult.textContent.trim()) {
+    textInput.value = translatedResult.textContent.trim();
+    showNotification("Texte traduit inséré !");
+  }
+  const modal = bootstrap.Modal.getInstance(document.getElementById('translateModal'));
+  modal.hide();
+});
+
+// ==================== INITIALISATION ====================
+
 // Initialiser les particules et les boutons de couleur
 document.addEventListener('DOMContentLoaded', function() {
     createParticles();
@@ -236,4 +305,12 @@ document.addEventListener('DOMContentLoaded', function() {
     elements.forEach((el, index) => {
         el.style.animationDelay = `${index * 0.2}s`;
     });
+    
+    console.log("Application WA Access initialisée avec succès !");
+    console.log("Fonctionnalités disponibles :");
+    console.log("- Changement de thème (bouton en haut à droite)");
+    console.log("- Personnalisation des couleurs (bouton en bas à gauche)");
+    console.log("- Traduction de messages (bouton 'Traduire le message')");
+    console.log("- Mode sombre/clair");
+    console.log("- Modification des couleurs principales et du container");
 });

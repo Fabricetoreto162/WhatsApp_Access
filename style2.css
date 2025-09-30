@@ -138,7 +138,7 @@ label {
     color: var(--primary);
 }
 
-select, input {
+select, input, textarea {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
@@ -149,9 +149,10 @@ select, input {
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;
+    resize: vertical;
 }
 
-select:focus, input:focus {
+select:focus, input:focus, textarea:focus {
     border-color: var(--primary);
     box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
     transform: scale(1.02);
@@ -206,6 +207,11 @@ button:active {
 #installBtn {
     background: linear-gradient(135deg, #10b981, #059669);
     margin-top: 15px;
+}
+
+.btn-translate {
+    background: linear-gradient(135deg, #ff6b6b, #cc5de8);
+    margin-bottom: 10px;
 }
 
 .theme-toggle {
@@ -300,6 +306,13 @@ button:active {
     color: var(--text-color);
 }
 
+.translate-modal {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+}
+
 .modal-header {
     border-bottom: 1px solid var(--glass-border);
 }
@@ -310,6 +323,24 @@ button:active {
 
 .btn-close {
     filter: invert(1);
+}
+
+.form-control, .form-select {
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+}
+
+.form-control:focus, .form-select:focus {
+    background: var(--input-bg);
+    border-color: var(--primary);
+    color: var(--text-color);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+.bg-light {
+    background: var(--input-bg) !important;
+    color: var(--text-color) !important;
 }
 
 .particles {
@@ -434,13 +465,14 @@ button:active {
     }
 }
 
+/* Media queries seulement pour les ajustements mobiles */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 15px;
     }
     
     .header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     
     .card {
@@ -453,12 +485,57 @@ button:active {
     }
     
     .theme-toggle {
-        top: 25px;
-        right: 25px;
+        top: 15px;
+        right: 15px;
     }
     
     .settings-toggle {
-        bottom: 20px;
-        left: 20px;
+        bottom: 15px;
+        left: 15px;
+    }
+    
+    .color-option {
+        width: 35px;
+        height: 35px;
+        margin: 0 8px;
+    }
+    
+    .d-flex.align-items-center.mb-3 {
+        flex-direction: column;
+    }
+    
+    .d-flex.align-items-center.mb-3 > div {
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    
+    .d-flex.align-items-center.justify-content-center {
+        transform: rotate(90deg);
+        margin: 10px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    .theme-toggle, .settings-toggle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .color-option {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
     }
 }
