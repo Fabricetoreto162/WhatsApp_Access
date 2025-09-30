@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WA Access</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="images/icon-512.png" type="image/x-icon">
+    <link rel="stylesheet" href="./fontawesome/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="settings-toggle" id="settingsToggle" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        <i class="fas fa-cog"></i>
+    </div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="pulse">WA Access</h1>
+            <p>Envoyez un message WhatsApp sans enregistrer le contact.</p>
+            <button id="installBtn" style="display: block;">
+                <i class="fa-solid fa-download"></i>
+                Installer l'application
+            </button>
+        </div>
+        
+        <div class="card">
+            <h2>📱 Access WhatsApp</h2>
+            
+            <label for="indicatif">Choisissez le pays :</label>
+            <select id="indicatif"></select>
+            
+            <label for="numero">Numéro de téléphone :</label>
+            <input type="text" id="numero" placeholder="Numéro sans indicatif">
+            <div class="msg row d-flex align-items-center">
+                <div class="input-msg">
+                    <label for="message">Votre message :</label>
+                   <input type="text" id="message" placeholder="Écrivez votre message">
+                </div>
+                <div class="traduction">
+                    <button id="translateBtn" data-bs-toggle="modal" data-bs-target="#translateModal">
+                        <i class="fa-solid fa-language"></i>
+                        Traduire
+                    </button>
+                  
+                </div>
+            </div>
+            
+            
+            <button onclick="ouvrirWhatsApp()">
+                <i class="fa-solid fa-arrow-right"></i>
+                <span>Envoyer le message</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Paramètres -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">
+                        <i class="fas fa-palette me-2"></i>Personnalisation des couleurs
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h6 class="text-center mb-3">Couleur des textes et éléments</h6>
+                        <div class="color-row">
+                            <div class="color-option active" style="background-color: #00d9ff;" data-color="#00d9ff" data-type="primary"></div>
+                            <div class="color-option" style="background-color: #ff6b6b;" data-color="#ff6b6b" data-type="primary"></div>
+                            <div class="color-option" style="background-color: #51cf66;" data-color="#51cf66" data-type="primary"></div>
+                            <div class="color-option" style="background-color: #ffd43b;" data-color="#ffd43b" data-type="primary"></div>
+                            <div class="color-option" style="background-color: #cc5de8;" data-color="#cc5de8" data-type="primary"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-center mb-3">Couleur du container</h6>
+                        <div class="color-row">
+                            <div class="color-option active" style="background-color: #00d9ff;" data-color="#00d9ff" data-type="container"></div>
+                            <div class="color-option" style="background-color: #ff6b6b;" data-color="#ff6b6b" data-type="container"></div>
+                            <div class="color-option" style="background-color: #51cf66;" data-color="#51cf66" data-type="container"></div>
+                            <div class="color-option" style="background-color: #ffd43b;" data-color="#ffd43b" data-type="container"></div>
+                            <div class="color-option" style="background-color: #cc5de8;" data-color="#cc5de8" data-type="container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" id="resetColors">Réinitialiser</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <!-- Modal traduction -->
+    <div class="modal fade" id="translateModal" tabindex="-1" aria-labelledby="translateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="translateModalLabel">
+                         <i class="fa-solid fa-language"></i>Traduction
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        
+                        <div class="color-row">
+                           
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+    <div class="notification" id="notification">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+        <span id="notificationText"></span>
+    </div>
+
+    <script src="script2.js"></script>
+    <script src="./fontawesome/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+</html>
