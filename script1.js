@@ -7,10 +7,45 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Gérer le bouton d'installation
+window.addEventListener('load', () => {
+  const installBtn = document.getElementById('installBtn');
+  let deferredPrompt;
+
+  // Vérifie si l'app est déjà installée
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('App déjà installée ✅');
+    installBtn.style.display = 'none';
+  }
+
+
+  // ✅ Pour Android / Windows
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'flex'; // Affiche le bouton
+
+    installBtn.addEventListener('click', async () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`Résultat : ${outcome}`);
+      deferredPrompt = null;
+    });
+  });
+
+  // ✅ Pour iOS (détection)
+  const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+  const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+
+  if (isIos && !isInStandaloneMode) {
+    document.getElementById('iosMessage').style.display = 'block';
+  }
+});
 
 
 // Gérer le bouton d'installation
-let deferredPrompt;
+/*let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
 window.addEventListener("beforeinstallprompt", (e) => {
@@ -33,7 +68,7 @@ installBtn.addEventListener("click", () => {
     }
     deferredPrompt = null;
   });
-});
+});*/
 
 // Gestion du thème
 const themeToggle = document.getElementById('themeToggle');
